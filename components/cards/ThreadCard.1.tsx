@@ -1,4 +1,0 @@
-const ThreadCard = {
-	id,
-	currentUserId,
-};
