@@ -1,0 +1,4 @@
+const ThreadCard = {
+	id,
+	currentUserId,
+};
