@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import { Textarea } from '../ui/textarea';
 import { createThread } from '@/lib/actions/thread.actions';
 import z from 'zod';
+import { useOrganization } from '@clerk/nextjs';
 
 interface Props {
 	user: {
@@ -25,6 +26,7 @@ interface Props {
 function PostThread({ userId }: { userId: string }) {
 	const pathname = usePathname();
 	const router = useRouter();
+	const { organization } = useOrganization();
 
 	const form = useForm({
 		defaultValues: {
@@ -35,7 +37,7 @@ function PostThread({ userId }: { userId: string }) {
 	});
 
 	const onSubmit = async (values: z.infer<typeof ThreadValidation>) => {
-		await createThread({ text: values.thread, author: userId, communityId: null, path: pathname });
+		await createThread({ text: values.thread, author: userId, communityId: organization ? organization.id : null, path: pathname });
 
 		router.push('/');
 	};
